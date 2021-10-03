@@ -6,19 +6,6 @@ import transformer.MethodTransformer
 import kotlin.reflect.KClass
 
 class SpringControllerBeanScanner(packageNames: List<String>) : KtClazzScanner(packageNames) {
-
-    private val REQUEST_MAPPING_ANNOTATIONS =
-        listOf(
-            RequestMapping::class,
-            GetMapping::class,
-            PostMapping::class,
-            DeleteMapping::class,
-            PutMapping::class
-        )
-            .map {
-                it.java
-            }
-
     override fun getKtClasses(): Iterable<KClass<*>> {
         val methods = SpringBeanFinder(packageNames).controllerBeans
             .map {
@@ -26,7 +13,7 @@ class SpringControllerBeanScanner(packageNames: List<String>) : KtClazzScanner(p
             }
             .flatten()
             .filter {
-                REQUEST_MAPPING_ANNOTATIONS.any { annotation -> it.isAnnotationPresent(annotation)}
+                MappingAnnotationChecker.isCandidate(it)
             }
 
         return MethodTransformer(methods)
