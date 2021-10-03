@@ -14,7 +14,7 @@ class TsModelGenerator(
 
     private val typescriptGenerator: TypeScriptGenerator = TypeScriptGenerator(
         rootClasses = ktclazzScanner.getKtClasses(),
-        classTransformers = tsOptions.makeClassTransformers(),
+        classTransformers = tsOptions!!.makeClassTransformers(),
         ignoreSuperclasses = tsOptions.makeIgnoreSuperClazzes(),
         mappings = tsOptions.makeMappings(),
     )
