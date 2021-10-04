@@ -12,8 +12,8 @@ class SpringBeanFinder(packageNames: List<String>) {
     init {
         val classPathProvider = ClassPathScanningCandidateComponentProvider(false)
             .also {
-                it.addExcludeFilter(AnnotationTypeFilter(RestController::class.java))
-                it.addExcludeFilter(AnnotationTypeFilter(Controller::class.java))
+                it.addIncludeFilter(AnnotationTypeFilter(RestController::class.java))
+                it.addIncludeFilter(AnnotationTypeFilter(Controller::class.java))
             }
 
         controllerBeans =
